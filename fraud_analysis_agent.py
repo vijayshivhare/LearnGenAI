@@ -10,7 +10,7 @@ api_key = os.environ.get("NVIDIA_API_KEY")
 
 client = OpenAI(
     base_url="https://integrate.api.nvidia.com/v1",
-    api_key="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"
+    api_key=api_key
 )
 
 # ------------------  FraudQueryUnderstandingTool ---------------------------
