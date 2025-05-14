@@ -46,7 +46,7 @@ Here's an example of how the app works:
 
 ```
 .
-├── .py
+├── fraud_analysis_agent.py
 ├── README.md
 ├── requirements.txt
 ├── screenshots/
