@@ -258,6 +258,80 @@ def extract_first_code_block(text: str) -> str:
         return ""
     return text[start:end].strip()
 
+
+def load_and_process_file(uploaded_file):
+    """
+    Reads the uploaded file (CSV or XLSX), processes it, and returns a single primary DataFrame.
+
+    Args:
+        uploaded_file: The file object uploaded via st.file_uploader.
+
+    Returns:
+        tuple: (primary_df, status_message, is_success)
+               primary_df: The main DataFrame to be used for display/analysis.
+               status_message: A string indicating the status (success, warning, error).
+               is_success: Boolean indicating if the operation was successful.
+    """
+    primary_df = None
+    status_message = ""
+    is_success = False
+
+    if uploaded_file.name.endswith('.csv'):
+        try:
+            primary_df = pd.read_csv(uploaded_file)
+            status_message = "CSV file loaded successfully."
+            is_success = True
+        except Exception as e:
+            status_message = f"Error loading CSV file: {e}"
+            st.error(status_message)
+
+    elif uploaded_file.name.endswith('.xlsx'):
+        try:
+            # Read all sheets from the XLSX file into a dictionary of DataFrames
+            all_sheets_df = pd.read_excel(uploaded_file, sheet_name=None)
+            status_message = f"XLSX file loaded with sheets: {', '.join(all_sheets_df.keys())}"
+
+            # Extract individual DataFrames for merging
+            df_customers = all_sheets_df.get('Customers')
+            df_accounts = all_sheets_df.get('Accounts')
+            df_events = all_sheets_df.get('Events')
+            df_transactions = all_sheets_df.get('Transactions')
+
+            # Check if all expected sheets are present before attempting to merge
+            if all(df is not None for df in [df_customers, df_accounts, df_events, df_transactions]):
+                # --- Merging Logic ---
+                df_merged_customer_accounts = pd.merge(
+                    df_customers,
+                    df_accounts,
+                    on='customer_id',
+                    how='inner'
+                )
+
+                final_df = pd.merge(
+                    df_merged_customer_accounts,
+                    df_transactions,
+                    on='customer_id',
+                    how='inner'
+                )               
+
+                primary_df = final_df # This is the single DataFrame to be returned
+                status_message = "Successfully created a single combined DataFrame from XLSX sheets."
+                is_success = True
+
+            else:
+                status_message = "One or more expected sheets (Customers, Accounts, Events, Transactions) were not found in the uploaded XLSX file. Please ensure all necessary sheets are present."
+                st.error(status_message)
+
+        except Exception as e:
+            status_message = f"An error occurred during XLSX file processing or merging: {e}"
+            st.error(status_message)
+
+    else:
+        status_message = "Unsupported file type. Please upload a CSV or XLSX file."
+        st.error(status_message)
+
+    return primary_df, status_message, is_success
+
 # === Main Streamlit App ===============================================
 
 def main():
@@ -272,46 +346,20 @@ def main():
     with left:
         st.header("Fraud Data Analysis Agent")
         st.markdown("<medium>Powered by <a href='[https://build.nvidia.com/nvidia/llama-3_1-nemotron-ultra-253b-v1](https://build.nvidia.com/nvidia/llama-3_1-nemotron-ultra-253b-v1)'>NVIDIA Llama-3.1-Nemotron-Ultra-253b-v1</a></medium>", unsafe_allow_html=True)
-        file = st.file_uploader("Choose CSV", type=["csv"])
-        # Modified section in your main() function where the file is read
+        file = st.file_uploader("Choose CSV/XLSX", type=["csv","xlsx"])
         if file:
-            if ("df_collection" not in st.session_state) or (st.session_state.get("current_file") != file.name):
+            if ("df" not in st.session_state) or (st.session_state.get("current_file") != file.name):
+                primary_df, status_msg, success_flag = load_and_process_file(file)
+                primary_df.to_csv("output.csv", index=False)
+                st.session_state.df = primary_df # Store the single DataFrame
                 st.session_state.current_file = file.name
-
-                if file.name.endswith('.csv'):
-                    st.session_state.df = pd.read_csv(file) # Still handles single CSV
-                    st.session_state.df_collection = {"main_sheet": st.session_state.df} # Wrap in a dict for consistency
-                elif file.name.endswith('.xlsx'):
-                    # Read all sheets into a dictionary of DataFrames
-                    st.session_state.df_collection = pd.read_excel(file, sheet_name=None)
-                    # You might want to set a "default" df for initial display/operations
-                    # For simplicity, let's assume the first sheet is the primary one
-                    st.session_state.df = list(st.session_state.df_collection.values())[0]
-                else:
-                    st.error("Unsupported file type. Please upload a CSV or XLSX file.")
-                    if "df" in st.session_state: del st.session_state.df
-                    if "df_collection" in st.session_state: del st.session_state.df_collection
-                    if "current_file" in st.session_state: del st.session_state.current_file
-
                 st.session_state.messages = []
                 st.session_state.feedback_log = [] # Reset feedback for new file
                 with st.spinner("Generating dataset insights …"):
-                    # Now, how to generate insights for multiple sheets?
-                    # Option A: Summarize each sheet individually
-                    all_insights = {}
-                    for sheet_name, sheet_df in st.session_state.df_collection.items():
-                        all_insights[sheet_name] = FraudDataInsightAgent(sheet_df)
-                    st.session_state.insights = all_insights # Store as a dictionary
-
-            # Display initial insights for all sheets
-            st.dataframe(st.session_state.df.head()) # Still showing just the first sheet's head
+                    st.session_state.insights = FraudDataInsightAgent(st.session_state.df)
+            st.dataframe(st.session_state.df.head())
             st.markdown("### Dataset Insights")
-            if isinstance(st.session_state.insights, dict):
-                for sheet_name, insight_text in st.session_state.insights.items():
-                    st.markdown(f"#### Insights for Sheet: `{sheet_name}`")
-                    st.markdown(insight_text)
-            else:
-                st.markdown(st.session_state.insights) # Fallback for single CSV
+            st.markdown(st.session_state.insights)
         else:
             st.info("Upload a CSV to begin chatting with your data.")
 

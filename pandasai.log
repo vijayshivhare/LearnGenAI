@@ -1,0 +1,1474 @@
+2025-06-05 06:37:56 [INFO] Question: What is the sum of the gdp of the top 5 countries?
+2025-06-05 06:37:56 [INFO] Running PandasAI with openai LLM...
+2025-06-05 06:37:56 [INFO] Prompt ID: 4e2d25fc-f33a-4f02-b958-6d03e06fa978
+2025-06-05 06:37:56 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 06:37:56 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 06:37:56 [INFO] Executing Step 1: CacheLookup
+2025-06-05 06:37:56 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 06:37:56 [INFO] Using prompt: <dataframe>
+dfs[0]:10x3
+country,gdp,happiness_index
+Japan,3146784053,7.2
+Australia,5439396719,6.3
+United Kingdom,7286153913,5.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ What is the sum of the gdp of the top 5 countries?
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 06:37:56 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 06:37:57 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-06-05 06:37:57 [ERROR] Pipeline failed on step 3: Error code: 401 - {'error': {'message': 'Incorrect API key provided: YOUR_OPE*******_KEY. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-06-05 06:40:51 [INFO] Question: What is the sum of the gdp of the top 5 countries?
+2025-06-05 06:40:52 [INFO] Running PandasAI with openai LLM...
+2025-06-05 06:40:52 [INFO] Prompt ID: f57fc8c2-65f0-43ea-975b-20d819e42607
+2025-06-05 06:40:52 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 06:40:52 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 06:40:52 [INFO] Executing Step 1: CacheLookup
+2025-06-05 06:40:52 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 06:40:52 [INFO] Using prompt: <dataframe>
+dfs[0]:10x3
+country,gdp,happiness_index
+United States,6393813347,7.2
+United Kingdom,0668344562,6.7
+China,2108810064,7.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ What is the sum of the gdp of the top 5 countries?
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 06:40:52 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 06:40:58 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-05 06:40:58 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:10x3
+country,gdp,happiness_index
+United States,6393813347,7.2
+United Kingdom,0668344562,6.7
+China,2108810064,7.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ What is the sum of the gdp of the top 5 countries?
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-06-05 06:40:58 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Sample data for demonstration
+data = {
+    'country': ['United States', 'United Kingdom', 'China'],
+    'gdp': [6393813347, 668344562, 2108810064],
+    'happiness_index': [7.2, 6.7, 7.0]
+}
+
+# Create a DataFrame
+dfs = [pd.DataFrame(data)]
+
+# Calculate the sum of the GDP of the top 5 countries
+# Assuming the DataFrame is already sorted by GDP in descending order
+top_countries = dfs[0].nlargest(5, 'gdp')  # Get top 5 countries by GDP
+total_gdp = top_countries['gdp'].sum()  # Sum their GDPs
+
+# Declare result var
+result = {
+    "type": "number",
+    "value": total_gdp
+}
+
+# Output the result
+print(result)
+            ```
+            
+2025-06-05 06:40:58 [INFO] Executing Step 4: CachePopulation
+2025-06-05 06:40:58 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 06:40:58 [INFO] 
+Code running:
+```
+data = {'country': ['United States', 'United Kingdom', 'China'], 'gdp': [6393813347, 668344562, 2108810064], 'happiness_index': [7.2, 6.7, 7.0]}
+top_countries = dfs[0].nlargest(5, 'gdp')
+total_gdp = top_countries['gdp'].sum()
+result = {'type': 'number', 'value': total_gdp}
+print(result)
+        ```
+2025-06-05 06:40:58 [INFO] Executing Step 6: CodeExecution
+2025-06-05 06:40:58 [INFO] Executing Step 7: ResultValidation
+2025-06-05 06:40:58 [INFO] Answer: {'type': 'number', 'value': np.int64(44135482562137)}
+2025-06-05 06:40:58 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:24:49 [INFO] Question: What is the average transaction amount?
+2025-06-05 08:24:49 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:24:49 [INFO] Prompt ID: 10ec6b43-327e-45be-9414-0b7d812104af
+2025-06-05 08:24:49 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:24:49 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:24:49 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:24:49 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:24:49 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+809570,6000.0,Emulator - Android,10.179.55.77,Costco Travel,2025-01-25 19:27:54,Yes
+770487,6799.32,Windows Desktop,178.200.51.240,LV,2025-01-24 16:18:43,No
+356787,394.99,Unknown Device,81.154.20.149,Online,2025-01-24 18:17:54,No
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ What is the average transaction amount?
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 08:24:49 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:24:52 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-05 08:24:52 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+809570,6000.0,Emulator - Android,10.179.55.77,Costco Travel,2025-01-25 19:27:54,Yes
+770487,6799.32,Windows Desktop,178.200.51.240,LV,2025-01-24 16:18:43,No
+356787,394.99,Unknown Device,81.154.20.149,Online,2025-01-24 18:17:54,No
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ What is the average transaction amount?
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-06-05 08:24:52 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Assuming dfs is already declared and contains the DataFrame
+# Calculate the average transaction amount
+average_txn_amount = dfs[0]['Txn Amount'].mean()
+
+# Declare result var: 
+result = {
+    "type": "number",
+    "value": average_txn_amount
+}
+            ```
+            
+2025-06-05 08:24:52 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:24:52 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:24:52 [INFO] 
+Code running:
+```
+average_txn_amount = dfs[0]['Txn Amount'].mean()
+result = {'type': 'number', 'value': average_txn_amount}
+        ```
+2025-06-05 08:24:52 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:24:52 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:24:52 [INFO] Answer: {'type': 'number', 'value': np.float64(2269.653333333333)}
+2025-06-05 08:24:52 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:29:30 [INFO] Question: What is the average transaction amount?
+2025-06-05 08:29:30 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:29:30 [INFO] Prompt ID: 625c4de4-015f-453c-8a44-1b7e0e701834
+2025-06-05 08:29:30 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:29:30 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:29:30 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:29:30 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:29:30 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+356787,6000.0,Mac,81.154.20.149,Walmart,2025-01-24 18:17:54,No
+770487,347.61,Emulator - Android,10.179.55.77,Online,2025-01-25 19:27:54,No
+809570,20.0,Samsung Galaxy S23,33.232.50.155,Gap,2025-01-24 17:18:43,Yes
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+770487,Login,,,10.179.55.77,2025-01-25 17:27:54
+809570,View Statement,OTP,Pass,13.179.55.77,2025-01-26 20:28:54
+356787,Phone Number Change,OTP,Fail,10.180.55.77,2025-01-24 17:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+719176,Michele Williams,"600 Jeffery Parkways, New Jamesside, MT 29394",New Jennifer,MT,90234,GA,z189j3i_og@protonmail.com,586.781.6522,2001-02-02,2021-07-21,Retail,Poor,f69d4f3e23db6f34,11.180.55.77
+809570,Larry Price,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Nelsonside,WV,21427,MC,ohw6kjjcuql@protonmail.com,001-851-316-1559x40781,1981-12-20,2024-10-07,Small Business,Good,d4023a51c9ebd7b6,13.180.55.77
+770487,Donald Walker,"Unit 7854 Box 5765, DPO AE 01058",Lawrencetown,IN,38232,TT,qg9sezj0qqra@yahoo.com,(541)639-5376x7242,1995-03-28,2024-09-01,Premium,Excellent,456d1c619c4ae6f9,10.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ What is the average transaction amount?
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 08:29:30 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:29:32 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-05 08:29:32 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+356787,6000.0,Mac,81.154.20.149,Walmart,2025-01-24 18:17:54,No
+770487,347.61,Emulator - Android,10.179.55.77,Online,2025-01-25 19:27:54,No
+809570,20.0,Samsung Galaxy S23,33.232.50.155,Gap,2025-01-24 17:18:43,Yes
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+770487,Login,,,10.179.55.77,2025-01-25 17:27:54
+809570,View Statement,OTP,Pass,13.179.55.77,2025-01-26 20:28:54
+356787,Phone Number Change,OTP,Fail,10.180.55.77,2025-01-24 17:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+719176,Michele Williams,"600 Jeffery Parkways, New Jamesside, MT 29394",New Jennifer,MT,90234,GA,z189j3i_og@protonmail.com,586.781.6522,2001-02-02,2021-07-21,Retail,Poor,f69d4f3e23db6f34,11.180.55.77
+809570,Larry Price,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Nelsonside,WV,21427,MC,ohw6kjjcuql@protonmail.com,001-851-316-1559x40781,1981-12-20,2024-10-07,Small Business,Good,d4023a51c9ebd7b6,13.180.55.77
+770487,Donald Walker,"Unit 7854 Box 5765, DPO AE 01058",Lawrencetown,IN,38232,TT,qg9sezj0qqra@yahoo.com,(541)639-5376x7242,1995-03-28,2024-09-01,Premium,Excellent,456d1c619c4ae6f9,10.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ What is the average transaction amount?
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-06-05 08:29:32 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Assuming dfs is already defined and contains the dataframes
+# Extract the first dataframe which contains transaction amounts
+transactions_df = dfs[0]
+
+# Calculate the average transaction amount
+average_txn_amount = transactions_df['Txn Amount'].mean()
+
+# Declare result var: 
+result = {
+    "type": "number",
+    "value": average_txn_amount
+}
+
+# Print the result for verification (optional)
+print(result)
+            ```
+            
+2025-06-05 08:29:32 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:29:32 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:29:32 [INFO] 
+Code running:
+```
+transactions_df = dfs[0]
+average_txn_amount = transactions_df['Txn Amount'].mean()
+result = {'type': 'number', 'value': average_txn_amount}
+print(result)
+        ```
+2025-06-05 08:29:32 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:29:32 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:29:32 [INFO] Answer: {'type': 'number', 'value': np.float64(2269.653333333333)}
+2025-06-05 08:29:32 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:30:00 [INFO] Question: plot the graph for different transactions amount
+2025-06-05 08:30:00 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:30:00 [INFO] Prompt ID: 47e6b3e9-a745-4184-a9ff-5abb96a3f7fb
+2025-06-05 08:30:00 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:30:00 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:30:00 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:30:00 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:30:00 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+770487,20.0,Emulator - Android,178.200.51.240,Gap,2025-01-24 18:17:54,No
+356787,394.99,Samsung Galaxy S23,33.232.50.155,Amazon,2025-01-25 20:27:54,Yes
+809570,6799.32,Windows Desktop,10.179.55.77,Online,2025-01-24 17:18:43,No
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+770487,Phone Number Change,,Pass,10.179.55.77,2025-01-26 18:57:54
+356787,Login,OTP,,12.180.55.77,2025-01-26 20:28:54
+809570,View Statement,OTP,Fail,10.180.55.77,2025-01-25 18:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+809570,Julie Watson,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Lawrencetown,MT,38232,LR,qjq8c84@zoho.com,001-851-316-1559x40781,1981-12-20,2021-07-21,Small Business,Good,025519d1e3364788,12.180.55.77
+356787,Larry Price,"600 Jeffery Parkways, New Jamesside, MT 29394",Nelsonside,MO,21427,MC,kjk6lu@icloud.com,(541)639-5376x7242,2001-02-02,2024-10-07,Premium,Poor,d4023a51c9ebd7b6,10.180.55.77
+719176,Michele Williams,"393 William Stream, New Sean, NE 73103",New Jennifer,IN,90234,GA,yquh93-qb@gmail.com,(425)875-0412,1995-03-28,2017-04-17,Retail,Excellent,456d1c619c4ae6f9,11.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the graph for different transactions amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 08:30:00 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:30:10 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-05 08:30:10 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+770487,20.0,Emulator - Android,178.200.51.240,Gap,2025-01-24 18:17:54,No
+356787,394.99,Samsung Galaxy S23,33.232.50.155,Amazon,2025-01-25 20:27:54,Yes
+809570,6799.32,Windows Desktop,10.179.55.77,Online,2025-01-24 17:18:43,No
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+770487,Phone Number Change,,Pass,10.179.55.77,2025-01-26 18:57:54
+356787,Login,OTP,,12.180.55.77,2025-01-26 20:28:54
+809570,View Statement,OTP,Fail,10.180.55.77,2025-01-25 18:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+809570,Julie Watson,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Lawrencetown,MT,38232,LR,qjq8c84@zoho.com,001-851-316-1559x40781,1981-12-20,2021-07-21,Small Business,Good,025519d1e3364788,12.180.55.77
+356787,Larry Price,"600 Jeffery Parkways, New Jamesside, MT 29394",Nelsonside,MO,21427,MC,kjk6lu@icloud.com,(541)639-5376x7242,2001-02-02,2024-10-07,Premium,Poor,d4023a51c9ebd7b6,10.180.55.77
+719176,Michele Williams,"393 William Stream, New Sean, NE 73103",New Jennifer,IN,90234,GA,yquh93-qb@gmail.com,(425)875-0412,1995-03-28,2017-04-17,Retail,Excellent,456d1c619c4ae6f9,11.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the graph for different transactions amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-06-05 08:30:10 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Assuming dfs is already defined as a list of DataFrames
+# Extracting the first DataFrame which contains transaction amounts
+txn_df = dfs[0]
+
+# Plotting the transaction amounts
+plt.figure(figsize=(10, 6))
+plt.bar(txn_df['Customer ID'].astype(str), txn_df['Txn Amount'], color='skyblue')
+plt.title('Transaction Amounts by Customer ID')
+plt.xlabel('Customer ID')
+plt.ylabel('Transaction Amount ($)')
+plt.xticks(rotation=45)
+plt.grid(axis='y')
+
+# Save the plot as a PNG file
+plt.savefig('transaction_amounts.png')
+plt.close()
+
+# Declare result var: 
+result = {
+    "type": "plot",
+    "value": "transaction_amounts.png"
+}
+            ```
+            
+2025-06-05 08:30:10 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:30:10 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:30:10 [INFO] Saving charts to C:\Users\rvvsh\OneDrive\projects\LearnGenAI\exports\charts\temp_chart.png
+2025-06-05 08:30:10 [INFO] 
+Code running:
+```
+txn_df = dfs[0]
+plt.figure(figsize=(10, 6))
+plt.bar(txn_df['Customer ID'].astype(str), txn_df['Txn Amount'], color='skyblue')
+plt.title('Transaction Amounts by Customer ID')
+plt.xlabel('Customer ID')
+plt.ylabel('Transaction Amount ($)')
+plt.xticks(rotation=45)
+plt.grid(axis='y')
+plt.savefig('C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+        ```
+2025-06-05 08:30:10 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:30:10 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-05 08:30:10 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-05 08:30:11 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:30:11 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+2025-06-05 08:30:11 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:35:45 [INFO] Question: plot the graph for different transactions amount
+2025-06-05 08:35:45 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:35:45 [INFO] Prompt ID: 035cf178-117c-4629-83e5-0b05483b1c79
+2025-06-05 08:35:45 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:35:45 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:35:45 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:35:45 [INFO] Using cached response
+2025-06-05 08:35:45 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:35:45 [INFO] Executing Step 2: Skipping...
+2025-06-05 08:35:45 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:35:45 [INFO] Executing Step 3: Skipping...
+2025-06-05 08:35:45 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:35:45 [INFO] Executing Step 4: Skipping...
+2025-06-05 08:35:45 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:35:45 [INFO] Saving charts to C:\Users\rvvsh\OneDrive\projects\LearnGenAI\exports\charts\temp_chart.png
+2025-06-05 08:35:46 [INFO] 
+Code running:
+```
+txn_df = dfs[0]
+plt.figure(figsize=(10, 6))
+plt.bar(txn_df['Customer ID'].astype(str), txn_df['Txn Amount'], color='skyblue')
+plt.title('Transaction Amounts by Customer ID')
+plt.xlabel('Customer ID')
+plt.ylabel('Transaction Amount ($)')
+plt.xticks(rotation=45)
+plt.grid(axis='y')
+plt.savefig('C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+        ```
+2025-06-05 08:35:46 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:35:46 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-05 08:35:46 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-05 08:35:46 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:35:46 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+2025-06-05 08:35:46 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:38:31 [INFO] Question: plot the graph for transactions amount
+2025-06-05 08:38:31 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:38:31 [INFO] Prompt ID: 53e5b92a-99bc-47ec-a823-cafcb5e53f23
+2025-06-05 08:38:31 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:38:31 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:38:31 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:38:31 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:38:31 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+809570,6799.32,Windows Desktop,10.179.55.77,Gap,2025-01-24 17:18:43,Yes
+356787,394.99,Emulator - Android,178.200.51.240,Costco Travel,2025-01-24 16:18:43,Yes
+770487,56.0,Unknown Device,81.154.20.149,LV,2025-01-25 20:27:54,No
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+809570,Phone Number Change,OTP,,12.180.55.77,2025-01-26 17:57:54
+770487,Login,OTP,Pass,13.179.55.77,2025-01-26 18:57:54
+356787,View Statement,,Auth Lock,10.180.55.77,2025-01-24 18:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+719176,Donald Walker,"393 William Stream, New Sean, NE 73103",Nelsonside,IN,38232,TT,u910en0e7@aol.com,8160214954,1995-03-28,2017-04-17,Retail,Good,d4023a51c9ebd7b6,13.180.55.77
+356787,Julie Watson,"Unit 7854 Box 5765, DPO AE 01058",Lawrencetown,WV,68921,MC,cwhbzy_xz@icloud.com,6399216739,1995-01-12,2024-09-01,Premium,Poor,025519d1e3364788,11.180.55.77
+770487,Larry Price,"600 Jeffery Parkways, New Jamesside, MT 29394",West Julie,MO,90234,GA,j34khv7kzr@aol.com,0635631887,1981-12-20,2021-07-21,Small Business,Excellent,456d1c619c4ae6f9,12.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the graph for transactions amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 08:38:31 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:38:36 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-05 08:38:36 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+809570,6799.32,Windows Desktop,10.179.55.77,Gap,2025-01-24 17:18:43,Yes
+356787,394.99,Emulator - Android,178.200.51.240,Costco Travel,2025-01-24 16:18:43,Yes
+770487,56.0,Unknown Device,81.154.20.149,LV,2025-01-25 20:27:54,No
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+809570,Phone Number Change,OTP,,12.180.55.77,2025-01-26 17:57:54
+770487,Login,OTP,Pass,13.179.55.77,2025-01-26 18:57:54
+356787,View Statement,,Auth Lock,10.180.55.77,2025-01-24 18:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+719176,Donald Walker,"393 William Stream, New Sean, NE 73103",Nelsonside,IN,38232,TT,u910en0e7@aol.com,8160214954,1995-03-28,2017-04-17,Retail,Good,d4023a51c9ebd7b6,13.180.55.77
+356787,Julie Watson,"Unit 7854 Box 5765, DPO AE 01058",Lawrencetown,WV,68921,MC,cwhbzy_xz@icloud.com,6399216739,1995-01-12,2024-09-01,Premium,Poor,025519d1e3364788,11.180.55.77
+770487,Larry Price,"600 Jeffery Parkways, New Jamesside, MT 29394",West Julie,MO,90234,GA,j34khv7kzr@aol.com,0635631887,1981-12-20,2021-07-21,Small Business,Excellent,456d1c619c4ae6f9,12.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the graph for transactions amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-06-05 08:38:36 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Assuming dfs is already declared and contains the DataFrames
+# Extracting the first DataFrame which contains transaction amounts
+txn_df = dfs[0]
+
+# Plotting the transaction amounts
+plt.figure(figsize=(10, 6))
+plt.bar(txn_df['Customer ID'].astype(str), txn_df['Txn Amount'], color='blue')
+plt.title('Transaction Amounts by Customer ID')
+plt.xlabel('Customer ID')
+plt.ylabel('Transaction Amount')
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot as a PNG file
+plt.savefig('transaction_amounts.png')
+
+# Declare result var: 
+result = {
+    "type": "plot",
+    "value": "transaction_amounts.png"
+}
+            ```
+            
+2025-06-05 08:38:36 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:38:36 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:38:36 [INFO] Saving charts to C:\Users\rvvsh\OneDrive\projects\LearnGenAI\exports\charts\temp_chart.png
+2025-06-05 08:38:36 [INFO] 
+Code running:
+```
+txn_df = dfs[0]
+plt.figure(figsize=(10, 6))
+plt.bar(txn_df['Customer ID'].astype(str), txn_df['Txn Amount'], color='blue')
+plt.title('Transaction Amounts by Customer ID')
+plt.xlabel('Customer ID')
+plt.ylabel('Transaction Amount')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+        ```
+2025-06-05 08:38:36 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:38:36 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-05 08:38:36 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-05 08:38:36 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:38:36 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+2025-06-05 08:38:36 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:42:21 [INFO] Question: show the graph for transactions amount
+2025-06-05 08:42:21 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:42:21 [INFO] Prompt ID: e31ef572-9a97-4505-99b9-d8a14665a237
+2025-06-05 08:42:21 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:42:21 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:42:21 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:42:21 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:42:22 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+770487,347.61,Mac,10.179.55.77,Walmart,2025-01-25 21:27:54,Yes
+356787,6799.32,Windows Desktop,81.154.20.149,Costco Travel,2025-01-25 20:27:54,No
+809570,20.0,Samsung Galaxy S23,178.200.51.240,Amazon,2025-01-24 18:17:54,Yes
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+356787,Login,OTP,Pass,13.179.55.77,2025-01-24 18:27:54
+809570,View Statement,OTP,,12.180.55.77,2025-01-26 18:27:54
+770487,Phone Number Change,,Fail,12.179.55.77,2025-01-26 20:28:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+809570,Julie Watson,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Nelsonside,MT,68921,LR,w-vgrb@icloud.com,001-851-316-1559x40781,1995-01-12,2017-04-17,Retail,Excellent,025519d1e3364788,10.180.55.77
+356787,Donald Walker,"Unit 7854 Box 5765, DPO AE 01058",West Julie,IN,21427,MC,ib7afef@yahoo.com,(541)639-5376x7242,1995-03-28,2024-09-01,Premium,Good,f69d4f3e23db6f34,11.180.55.77
+770487,Michele Williams,"600 Jeffery Parkways, New Jamesside, MT 29394",Lawrencetown,MO,38232,TT,4eu5zgoo@outlook.com,(425)875-0412,1981-12-20,2021-07-21,Small Business,Poor,d4023a51c9ebd7b6,12.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ show the graph for transactions amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 08:42:22 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:42:26 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-05 08:42:26 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+770487,347.61,Mac,10.179.55.77,Walmart,2025-01-25 21:27:54,Yes
+356787,6799.32,Windows Desktop,81.154.20.149,Costco Travel,2025-01-25 20:27:54,No
+809570,20.0,Samsung Galaxy S23,178.200.51.240,Amazon,2025-01-24 18:17:54,Yes
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+356787,Login,OTP,Pass,13.179.55.77,2025-01-24 18:27:54
+809570,View Statement,OTP,,12.180.55.77,2025-01-26 18:27:54
+770487,Phone Number Change,,Fail,12.179.55.77,2025-01-26 20:28:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+809570,Julie Watson,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Nelsonside,MT,68921,LR,w-vgrb@icloud.com,001-851-316-1559x40781,1995-01-12,2017-04-17,Retail,Excellent,025519d1e3364788,10.180.55.77
+356787,Donald Walker,"Unit 7854 Box 5765, DPO AE 01058",West Julie,IN,21427,MC,ib7afef@yahoo.com,(541)639-5376x7242,1995-03-28,2024-09-01,Premium,Good,f69d4f3e23db6f34,11.180.55.77
+770487,Michele Williams,"600 Jeffery Parkways, New Jamesside, MT 29394",Lawrencetown,MO,38232,TT,4eu5zgoo@outlook.com,(425)875-0412,1981-12-20,2021-07-21,Small Business,Poor,d4023a51c9ebd7b6,12.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ show the graph for transactions amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-06-05 08:42:26 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Extract the transaction amounts from the first DataFrame in dfs
+txn_amounts = dfs[0]['Txn Amount']
+
+# Create a bar plot for transaction amounts
+plt.figure(figsize=(10, 6))
+plt.bar(range(len(txn_amounts)), txn_amounts, color='blue')
+plt.xlabel('Transaction Index')
+plt.ylabel('Transaction Amount ($)')
+plt.title('Transaction Amounts')
+plt.xticks(range(len(txn_amounts)), [f'Txn {i+1}' for i in range(len(txn_amounts))])
+plt.grid(axis='y')
+
+# Save the plot as a PNG file
+plot_filename = 'transaction_amounts.png'
+plt.savefig(plot_filename)
+plt.close()
+
+# Declare result var: 
+result = {
+    "type": "plot",
+    "value": plot_filename
+}
+            ```
+            
+2025-06-05 08:42:26 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:42:26 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:42:26 [INFO] Saving charts to C:\Users\rvvsh\OneDrive\projects\LearnGenAI\exports\charts\temp_chart.png
+2025-06-05 08:42:26 [INFO] 
+Code running:
+```
+txn_amounts = dfs[0]['Txn Amount']
+plt.figure(figsize=(10, 6))
+plt.bar(range(len(txn_amounts)), txn_amounts, color='blue')
+plt.xlabel('Transaction Index')
+plt.ylabel('Transaction Amount ($)')
+plt.title('Transaction Amounts')
+plt.xticks(range(len(txn_amounts)), [f'Txn {i + 1}' for i in range(len(txn_amounts))])
+plt.grid(axis='y')
+plot_filename = 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'
+plt.savefig(plot_filename)
+plt.close()
+result = {'type': 'plot', 'value': plot_filename}
+        ```
+2025-06-05 08:42:26 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:42:27 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:42:27 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+2025-06-05 08:42:27 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:45:58 [INFO] Question: show the graph for transactions amount
+2025-06-05 08:45:59 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:45:59 [INFO] Prompt ID: 6fc45ce7-4e05-429d-b71a-3ddda70d72f8
+2025-06-05 08:45:59 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:45:59 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:45:59 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:45:59 [INFO] Using cached response
+2025-06-05 08:45:59 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:45:59 [INFO] Executing Step 2: Skipping...
+2025-06-05 08:45:59 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:45:59 [INFO] Executing Step 3: Skipping...
+2025-06-05 08:45:59 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:45:59 [INFO] Executing Step 4: Skipping...
+2025-06-05 08:45:59 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:45:59 [INFO] Saving charts to C:\Users\rvvsh\OneDrive\projects\LearnGenAI\exports\charts\temp_chart.png
+2025-06-05 08:45:59 [INFO] 
+Code running:
+```
+txn_amounts = dfs[0]['Txn Amount']
+plt.figure(figsize=(10, 6))
+plt.bar(range(len(txn_amounts)), txn_amounts, color='blue')
+plt.xlabel('Transaction Index')
+plt.ylabel('Transaction Amount ($)')
+plt.title('Transaction Amounts')
+plt.xticks(range(len(txn_amounts)), [f'Txn {i + 1}' for i in range(len(txn_amounts))])
+plt.grid(axis='y')
+plot_filename = 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'
+plt.savefig(plot_filename)
+plt.close()
+result = {'type': 'plot', 'value': plot_filename}
+        ```
+2025-06-05 08:45:59 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:45:59 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:45:59 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+2025-06-05 08:45:59 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:57:52 [INFO] Question: What is the average transaction amount?
+2025-06-05 08:57:52 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:57:52 [INFO] Prompt ID: b85fe0c2-25dc-4918-be8f-4d5e49233cdc
+2025-06-05 08:57:52 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:57:52 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:57:52 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:57:52 [INFO] Using cached response
+2025-06-05 08:57:52 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:57:52 [INFO] Executing Step 2: Skipping...
+2025-06-05 08:57:52 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:57:52 [INFO] Executing Step 3: Skipping...
+2025-06-05 08:57:52 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:57:52 [INFO] Executing Step 4: Skipping...
+2025-06-05 08:57:52 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:57:52 [INFO] 
+Code running:
+```
+transactions_df = dfs[0]
+average_txn_amount = transactions_df['Txn Amount'].mean()
+result = {'type': 'number', 'value': average_txn_amount}
+print(result)
+        ```
+2025-06-05 08:57:52 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:57:52 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:57:52 [INFO] Answer: {'type': 'number', 'value': np.float64(2269.653333333333)}
+2025-06-05 08:57:52 [INFO] Executing Step 8: ResultParsing
+2025-06-05 08:58:01 [INFO] Question: What is the average transaction amount?
+2025-06-05 08:58:01 [INFO] Running PandasAI with openai LLM...
+2025-06-05 08:58:01 [INFO] Prompt ID: 2ed7dfdd-859c-471e-bffc-02506da8821c
+2025-06-05 08:58:01 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 08:58:01 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 08:58:01 [INFO] Executing Step 1: CacheLookup
+2025-06-05 08:58:01 [INFO] Using cached response
+2025-06-05 08:58:01 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 08:58:01 [INFO] Executing Step 2: Skipping...
+2025-06-05 08:58:01 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 08:58:01 [INFO] Executing Step 3: Skipping...
+2025-06-05 08:58:01 [INFO] Executing Step 4: CachePopulation
+2025-06-05 08:58:01 [INFO] Executing Step 4: Skipping...
+2025-06-05 08:58:01 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 08:58:01 [INFO] 
+Code running:
+```
+transactions_df = dfs[0]
+average_txn_amount = transactions_df['Txn Amount'].mean()
+result = {'type': 'number', 'value': average_txn_amount}
+print(result)
+        ```
+2025-06-05 08:58:01 [INFO] Executing Step 6: CodeExecution
+2025-06-05 08:58:01 [INFO] Executing Step 7: ResultValidation
+2025-06-05 08:58:01 [INFO] Answer: {'type': 'number', 'value': np.float64(2269.653333333333)}
+2025-06-05 08:58:01 [INFO] Executing Step 8: ResultParsing
+2025-06-05 09:34:48 [INFO] Question: What is the average transaction amount?
+2025-06-05 09:34:48 [INFO] Running PandasAI with openai LLM...
+2025-06-05 09:34:48 [INFO] Prompt ID: e477299e-98f8-43ac-a305-96afd5338b8d
+2025-06-05 09:34:48 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 09:34:48 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 09:34:48 [INFO] Executing Step 1: CacheLookup
+2025-06-05 09:34:48 [INFO] Using cached response
+2025-06-05 09:34:48 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 09:34:48 [INFO] Executing Step 2: Skipping...
+2025-06-05 09:34:49 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 09:34:49 [INFO] Executing Step 3: Skipping...
+2025-06-05 09:34:49 [INFO] Executing Step 4: CachePopulation
+2025-06-05 09:34:49 [INFO] Executing Step 4: Skipping...
+2025-06-05 09:34:49 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 09:34:49 [INFO] 
+Code running:
+```
+transactions_df = dfs[0]
+average_txn_amount = transactions_df['Txn Amount'].mean()
+result = {'type': 'number', 'value': average_txn_amount}
+print(result)
+        ```
+2025-06-05 09:34:49 [INFO] Executing Step 6: CodeExecution
+2025-06-05 09:34:49 [INFO] Executing Step 7: ResultValidation
+2025-06-05 09:34:49 [INFO] Answer: {'type': 'number', 'value': np.float64(2269.653333333333)}
+2025-06-05 09:34:49 [INFO] Executing Step 8: ResultParsing
+2025-06-05 09:35:04 [INFO] Question: plot the transaction amount
+2025-06-05 09:35:04 [INFO] Running PandasAI with openai LLM...
+2025-06-05 09:35:04 [INFO] Prompt ID: 16fee2ef-c976-436f-9114-35ba6691b7de
+2025-06-05 09:35:04 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 09:35:04 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 09:35:04 [INFO] Executing Step 1: CacheLookup
+2025-06-05 09:35:04 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 09:35:04 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+356787,347.61,Samsung Galaxy S23,178.200.51.240,Amazon,2025-01-25 19:27:54,Yes
+809570,56.0,Unknown Device,33.232.50.155,Gap,2025-01-25 21:27:54,No
+770487,20.0,Windows Desktop,10.179.55.77,Online,2025-01-24 16:18:43,Yes
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+356787,View Statement,OTP,Pass,12.179.55.77,2025-01-24 18:27:54
+809570,Login,,Auth Lock,13.180.55.77,2025-01-26 18:57:54
+770487,Phone Number Change,OTP,,10.179.55.77,2025-01-26 18:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+770487,Donald Walker,"600 Jeffery Parkways, New Jamesside, MT 29394",Lawrencetown,MT,90234,GA,owzgayvw-cd@icloud.com,586.781.6522,1995-03-28,2024-09-01,Premium,Excellent,d4023a51c9ebd7b6,13.180.55.77
+719176,Larry Price,"393 William Stream, New Sean, NE 73103",West Julie,IN,21427,TT,rvsww4q2j@gmail.com,(541)639-5376x7242,1995-01-12,2021-07-21,Small Business,Poor,025519d1e3364788,12.180.55.77
+809570,Julie Watson,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Nelsonside,MO,38232,LR,hxy06x@yahoo.com,(425)875-0412,2001-02-02,2024-10-07,Retail,Good,f69d4f3e23db6f34,11.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the transaction amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 09:35:04 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 09:35:05 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-06-05 09:35:05 [ERROR] Pipeline failed on step 3: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************xrEA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-06-05 09:36:59 [INFO] Question: plot the transaction amount
+2025-06-05 09:36:59 [INFO] Running PandasAI with openai LLM...
+2025-06-05 09:36:59 [INFO] Prompt ID: d31a3914-180f-46f0-bc6a-51b3d639aa8f
+2025-06-05 09:36:59 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 09:36:59 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 09:36:59 [INFO] Executing Step 1: CacheLookup
+2025-06-05 09:36:59 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 09:36:59 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+770487,6799.32,Emulator - Android,81.154.20.149,Costco Travel,2025-01-24 18:17:54,Yes
+356787,394.99,Mac,33.232.50.155,Walmart,2025-01-25 21:27:54,No
+809570,347.61,Unknown Device,178.200.51.240,Amazon,2025-01-25 19:27:54,Yes
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+356787,Login,,,12.179.55.77,2025-01-24 18:27:54
+809570,Phone Number Change,OTP,Auth Lock,10.179.55.77,2025-01-26 20:28:54
+770487,View Statement,OTP,Fail,12.180.55.77,2025-01-26 17:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+719176,Julie Watson,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",New Jennifer,WV,21427,GA,u7te6wzd5e@outlook.com,(541)639-5376x7242,1995-03-28,2017-04-17,Premium,Good,f69d4f3e23db6f34,12.180.55.77
+356787,Michele Williams,"600 Jeffery Parkways, New Jamesside, MT 29394",West Julie,IN,68921,LR,24inytlce3@gmail.com,001-851-316-1559x40781,2001-02-02,2024-09-01,Retail,Excellent,d4023a51c9ebd7b6,11.180.55.77
+770487,Donald Walker,"Unit 7854 Box 5765, DPO AE 01058",Nelsonside,MT,90234,MC,2az77o4@aol.com,(425)875-0412,1981-12-20,2024-10-07,Small Business,Poor,025519d1e3364788,10.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the transaction amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 09:36:59 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 09:37:00 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-06-05 09:37:00 [ERROR] Pipeline failed on step 3: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************xrEA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-06-05 09:37:29 [INFO] Question: plot the transaction amount
+2025-06-05 09:37:29 [INFO] Running PandasAI with openai LLM...
+2025-06-05 09:37:29 [INFO] Prompt ID: 2dd8636b-bcf2-41bb-afc2-4de841c1ff03
+2025-06-05 09:37:29 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 09:37:29 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 09:37:29 [INFO] Executing Step 1: CacheLookup
+2025-06-05 09:37:29 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 09:37:29 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+770487,20.0,Unknown Device,33.232.50.155,Costco Travel,2025-01-25 21:27:54,Yes
+809570,6000.0,Samsung Galaxy S23,10.179.55.77,Walmart,2025-01-24 17:18:43,Yes
+356787,6799.32,Mac,178.200.51.240,Online,2025-01-25 19:27:54,No
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+809570,View Statement,OTP,,10.180.55.77,2025-01-24 18:27:54
+770487,Login,,Auth Lock,13.179.55.77,2025-01-26 17:27:54
+356787,Phone Number Change,OTP,Pass,10.179.55.77,2025-01-25 17:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+770487,Donald Walker,"393 William Stream, New Sean, NE 73103",Nelsonside,MO,90234,MC,xwl6_-se6z4@gmail.com,(541)639-5376x7242,1981-12-20,2017-04-17,Retail,Poor,025519d1e3364788,12.180.55.77
+809570,Larry Price,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",New Jennifer,WV,38232,LR,5fr9on7hq@outlook.com,(425)875-0412,1995-03-28,2024-10-07,Small Business,Excellent,456d1c619c4ae6f9,13.180.55.77
+356787,Julie Watson,"Unit 7854 Box 5765, DPO AE 01058",West Julie,MT,68921,TT,g25ie19bg20@aol.com,001-851-316-1559x40781,1995-01-12,2024-09-01,Premium,Good,d4023a51c9ebd7b6,11.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the transaction amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 09:37:29 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 09:37:30 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-06-05 09:37:30 [ERROR] Pipeline failed on step 3: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************xrEA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-06-05 09:38:58 [INFO] Question: plot the transaction amount
+2025-06-05 09:38:58 [INFO] Running PandasAI with openai LLM...
+2025-06-05 09:38:58 [INFO] Prompt ID: 1e163b2b-1cd0-43cc-8561-110608620ff7
+2025-06-05 09:38:58 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 09:38:58 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 09:38:58 [INFO] Executing Step 1: CacheLookup
+2025-06-05 09:38:58 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 09:38:58 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+770487,56.0,Windows Desktop,33.232.50.155,LV,2025-01-25 20:27:54,Yes
+809570,20.0,Emulator - Android,81.154.20.149,Online,2025-01-24 17:18:43,Yes
+356787,6000.0,Unknown Device,10.179.55.77,Amazon,2025-01-25 19:27:54,No
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+770487,Login,OTP,Auth Lock,13.179.55.77,2025-01-25 17:27:54
+809570,Phone Number Change,,,12.180.55.77,2025-01-26 17:27:54
+356787,View Statement,OTP,Fail,13.180.55.77,2025-01-26 18:57:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+356787,Julie Watson,"600 Jeffery Parkways, New Jamesside, MT 29394",Nelsonside,MO,90234,TT,sb9woj@zoho.com,9174565933,1995-01-12,2024-10-07,Premium,Poor,d4023a51c9ebd7b6,11.180.55.77
+770487,Donald Walker,"Unit 7854 Box 5765, DPO AE 01058",Lawrencetown,MT,38232,GA,elaebl@aol.com,6735204054,1981-12-20,2024-09-01,Small Business,Excellent,025519d1e3364788,12.180.55.77
+809570,Larry Price,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",West Julie,IN,21427,MC,33ypo1@zoho.com,0218013140,2001-02-02,2017-04-17,Retail,Good,456d1c619c4ae6f9,13.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the transaction amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 09:38:58 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 09:38:59 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-06-05 09:38:59 [ERROR] Pipeline failed on step 3: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************xrEA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-06-05 09:43:16 [INFO] Question: plot the transaction amount
+2025-06-05 09:43:16 [INFO] Running PandasAI with openai LLM...
+2025-06-05 09:43:16 [INFO] Prompt ID: 6c11195f-5694-42f5-af34-91ee78efcce6
+2025-06-05 09:43:16 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-06-05 09:43:17 [INFO] Executing Step 0: ValidatePipelineInput
+2025-06-05 09:43:17 [INFO] Executing Step 1: CacheLookup
+2025-06-05 09:43:17 [INFO] Executing Step 2: PromptGeneration
+2025-06-05 09:43:17 [INFO] Using prompt: <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+809570,20.0,Mac,10.179.55.77,Online,2025-01-25 20:27:54,No
+356787,394.99,Windows Desktop,178.200.51.240,Walmart,2025-01-24 17:18:43,No
+770487,56.0,Emulator - Android,81.154.20.149,Costco Travel,2025-01-24 18:17:54,Yes
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+770487,Login,,Fail,12.180.55.77,2025-01-25 17:27:54
+356787,Phone Number Change,OTP,,13.179.55.77,2025-01-25 18:27:54
+809570,View Statement,OTP,Pass,12.179.55.77,2025-01-24 17:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+770487,Julie Watson,"600 Jeffery Parkways, New Jamesside, MT 29394",West Julie,MO,68921,TT,xppdetr@yahoo.com,9869189417,2001-02-02,2024-09-01,Retail,Good,456d1c619c4ae6f9,12.180.55.77
+719176,Michele Williams,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Nelsonside,IN,38232,GA,h8ogffxe57c7@zoho.com,7128693690,1981-12-20,2021-07-21,Small Business,Excellent,025519d1e3364788,10.180.55.77
+356787,Donald Walker,"Unit 7854 Box 5765, DPO AE 01058",New Jennifer,MT,90234,LR,_0lol-z9q9d@hotmail.com,1077144536,1995-03-28,2017-04-17,Premium,Poor,f69d4f3e23db6f34,11.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the transaction amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-06-05 09:43:17 [INFO] Executing Step 3: CodeGenerator
+2025-06-05 09:43:22 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-05 09:43:22 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:6x7
+Customer ID,Txn Amount,Device,IP Address,Merchant,Time,Fraud
+809570,20.0,Mac,10.179.55.77,Online,2025-01-25 20:27:54,No
+356787,394.99,Windows Desktop,178.200.51.240,Walmart,2025-01-24 17:18:43,No
+770487,56.0,Emulator - Android,81.154.20.149,Costco Travel,2025-01-24 18:17:54,Yes
+</dataframe>
+<dataframe>
+dfs[1]:25x6
+Customer ID,Activity,Challenge,Outcome,IP address,Time
+770487,Login,,Fail,12.180.55.77,2025-01-25 17:27:54
+356787,Phone Number Change,OTP,,13.179.55.77,2025-01-25 18:27:54
+809570,View Statement,OTP,Pass,12.179.55.77,2025-01-24 17:27:54
+</dataframe>
+<dataframe>
+dfs[2]:4x15
+Customer ID,customer_name,customer_address,customer_city,customer_state,customer_zip,customer_country,customer_email,customer_phone,customer_dob,customer_join_date,customer_segment,customer_credit_score,customer_device_fingerprint,customer_ip_address
+770487,Julie Watson,"600 Jeffery Parkways, New Jamesside, MT 29394",West Julie,MO,68921,TT,xppdetr@yahoo.com,9869189417,2001-02-02,2024-09-01,Retail,Good,456d1c619c4ae6f9,12.180.55.77
+719176,Michele Williams,"31647 Martin Knoll Apt. 419, New Jessica, GA 61090",Nelsonside,IN,38232,GA,h8ogffxe57c7@zoho.com,7128693690,1981-12-20,2021-07-21,Small Business,Excellent,025519d1e3364788,10.180.55.77
+356787,Donald Walker,"Unit 7854 Box 5765, DPO AE 01058",New Jennifer,MT,90234,LR,_0lol-z9q9d@hotmail.com,1077144536,1995-03-28,2017-04-17,Premium,Poor,f69d4f3e23db6f34,11.180.55.77
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot the transaction amount
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-06-05 09:43:22 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Assuming dfs[0] contains the transaction data
+transaction_data = dfs[0]
+
+# Plotting the transaction amount
+plt.figure(figsize=(10, 6))
+plt.bar(transaction_data['Customer ID'].astype(str), transaction_data['Txn Amount'], color='blue')
+plt.title('Transaction Amounts by Customer ID')
+plt.xlabel('Customer ID')
+plt.ylabel('Transaction Amount ($)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot as a PNG file
+plot_filename = 'transaction_amounts.png'
+plt.savefig(plot_filename)
+
+# Declare result var: 
+result = {"type": "plot", "value": plot_filename}
+            ```
+            
+2025-06-05 09:43:22 [INFO] Executing Step 4: CachePopulation
+2025-06-05 09:43:22 [INFO] Executing Step 5: CodeCleaning
+2025-06-05 09:43:22 [INFO] Saving charts to C:\Users\rvvsh\OneDrive\projects\LearnGenAI\exports\charts\temp_chart.png
+2025-06-05 09:43:22 [INFO] 
+Code running:
+```
+transaction_data = dfs[0]
+plt.figure(figsize=(10, 6))
+plt.bar(transaction_data['Customer ID'].astype(str), transaction_data['Txn Amount'], color='blue')
+plt.title('Transaction Amounts by Customer ID')
+plt.xlabel('Customer ID')
+plt.ylabel('Transaction Amount ($)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plot_filename = 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'
+plt.savefig(plot_filename)
+result = {'type': 'plot', 'value': plot_filename}
+        ```
+2025-06-05 09:43:22 [INFO] Executing Step 6: CodeExecution
+2025-06-05 09:43:23 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-05 09:43:23 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-05 09:43:23 [INFO] Executing Step 7: ResultValidation
+2025-06-05 09:43:23 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/rvvsh/OneDrive/projects/LearnGenAI/exports/charts/temp_chart.png'}
+2025-06-05 09:43:23 [INFO] Executing Step 8: ResultParsing

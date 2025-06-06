@@ -10,6 +10,7 @@ from langchain_openai import ChatOpenAI
 #from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain_core.messages import SystemMessage, HumanMessage
 from dotenv import load_dotenv
+import yaml
 
 # === Configuration ===
 # The NVIDIA_API_KEY is used by ChatNVIDIA
@@ -17,21 +18,39 @@ from dotenv import load_dotenv
 #os.environ["NVIDIA_API_KEY"] = ""
 load_dotenv()
 
+# Load messages from the YAML file
+with open('messages.yaml', 'r') as file:
+    MESSAGES = yaml.safe_load(file)
+
 # Initialize LangChain LLM for NVIDIA models
 # This will pick up NVIDIA_API_KEY automatically
 #llm_model = ChatNVIDIA(model="meta/llama2-70b")
 llm_model = ChatOpenAI(model_name="gpt-4o")
 
+# === New Logging Function ===
+def log_agent_action(agent_name: str, tool_used: str, thought: str = None):
+    """
+    Logs agent actions and tool usage to the Streamlit UI,
+    mimicking the format in the provided image.
+    """
+    st.markdown(f'<div style="background-color:#E0F2F7; padding: 10px; border-radius: 5px; margin-bottom: 10px;">'
+                f'<b>Agent Name:</b> {agent_name}<br>'
+                f'<b>Tool used:</b> {tool_used}', unsafe_allow_html=True)
+    #if thought:
+    #    st.markdown(f'<b>Thought:</b> {thought}', unsafe_allow_html=True)
+    #st.markdown(f'<b>Action:</b> {tool_used} Action Input: ["search_query":"<query_details>"]<br>' # Placeholder for tool input
+    #            f'<button onclick="alert(\'Observation would be shown here!\')">Show observation</button>' # Simple JS alert for demo
+    #            f'</div>', unsafe_allow_html=True)
 
-# ------------------  FraudQueryUnderstandingTool ---------------------------
+# ------------------ FraudQueryUnderstandingTool ---------------------------
 def FraudQueryUnderstandingTool(query: str) -> bool:
     """Return True if the query seems to request a visualisation based on keywords."""
     messages = [
-        SystemMessage(content="detailed thinking off. You are an assistant that determines if a query is requesting a data visualization. Respond with only 'true' if the query is asking for a plot, chart, graph, or any visual representation of data. Otherwise, respond with 'false'."),
+        SystemMessage(content=MESSAGES['fraud_query_understanding_tool']['system_message']),
         HumanMessage(content=query)
     ]
 
-    # Use LangChain's LLM to invoke the call
+    # Assuming llm_model is defined elsewhere
     response = llm_model.invoke(messages, config={"max_tokens": 5, "temperature": 0.1})
 
     # Extract the response content and convert to boolean
@@ -40,59 +59,56 @@ def FraudQueryUnderstandingTool(query: str) -> bool:
 
 # === FraudCodeGeneration TOOLS ============================================
 
-# ------------------  FraudPlotCodeGeneratorTool ---------------------------
+# ------------------ FraudPlotCodeGeneratorTool ---------------------------
 def FraudPlotCodeGeneratorTool(cols: List[str], query: str) -> str:
     """Generate a prompt for the LLM to write pandas+matplotlib code for a plot based on the query and columns."""
-    return f"""
-    Given DataFrame `df` with columns: {', '.join(cols)}
-    Write Python code using pandas **and matplotlib** (as plt) to answer:
-    "{query}"
+    prompt_template = MESSAGES['fraud_plot_code_generator']['prompt']
+    return prompt_template.format(cols=', '.join(cols), query=query)
 
-    Rules
-    -----
-    1. Use pandas for data manipulation and matplotlib.pyplot (as plt) for plotting.
-    2. Assign the final result (DataFrame, Series, scalar *or* matplotlib Figure) to a variable named `result`.
-    3. Create only ONE relevant plot. Set `figsize=(6,4)`, add title/labels.
-    4. Return your answer inside a single markdown fence that starts with ```python and ends with ```.
-    """
-
-# ------------------  FraudCodeWritingTool ---------------------------------
+# ------------------ FraudCodeWritingTool ---------------------------------
 def FraudCodeWritingTool(cols: List[str], query: str) -> str:
     """Generate a prompt for the LLM to write pandas-only code for a data query (no plotting)."""
-    return f"""
-    Given DataFrame `df` with columns: {', '.join(cols)}
-    Write Python code (pandas **only**, no plotting) to answer:
-    "{query}"
-
-    Rules
-    -----
-    1. Use pandas operations on `df` only.
-    2. Assign the final result to `result`.
-    3. Wrap the snippet in a single ```python code fence (no extra prose).
-    """
+    prompt_template = MESSAGES['fraud_code_writing']['prompt']
+    return prompt_template.format(cols=', '.join(cols), query=query)
 
 # === FraudCodeGenerationAgent ==============================================
-
 def FraudCodeGenerationAgent(query: str, df: pd.DataFrame):
     """Selects the appropriate code generation tool and gets code from the LLM for the user's query."""
+    # Assuming FraudQueryUnderstandingTool is defined elsewhere
     should_plot = FraudQueryUnderstandingTool(query)
+    tool_name = "Fraud Plot Code Generator Tool" if should_plot else "Fraud Code Writing Tool"
+
+    # Log the action of the FraudCodeGenerationAgent
+    log_agent_action(
+        agent_name="Fraud Code Generation Agent", # Example agent name from image
+        tool_used=tool_name,
+        thought="To generate the appropriate code based on the user's query, I need to determine if a plot is requested and then use the correct code generation tool."
+    )
     prompt_content = FraudPlotCodeGeneratorTool(df.columns.tolist(), query) if should_plot else FraudCodeWritingTool(df.columns.tolist(), query)
 
     messages = [
-        SystemMessage(content="detailed thinking off. You are a Python data-analysis expert who writes clean, efficient code. Solve the given problem with optimal pandas operations. Be concise and focused. Your response must contain ONLY a properly-closed ```python code block with no explanations before or after. Ensure your solution is correct, handles edge cases, and follows best practices for data analysis."),
+        SystemMessage(content=MESSAGES['fraud_code_generation_agent']['system_message']),
         HumanMessage(content=prompt_content)
     ]
 
+    # Assuming llm_model is defined elsewhere
     response = llm_model.invoke(messages, config={"max_tokens": 1024, "temperature": 0.2})
 
     full_response = response.content
+    # Assuming extract_first_code_block is defined elsewhere
     code = extract_first_code_block(full_response)
     return code, should_plot, ""
 
 # === FraudExecutionAgent ====================================================
-
 def FraudExecutionAgent(code: str, df: pd.DataFrame, should_plot: bool):
     """Executes the generated code in a controlled environment and returns the result or error message."""
+    # Log the action of the FraudExecutionAgent
+    log_agent_action(
+        agent_name="Fraud Execution Agent", 
+        tool_used="Python Interpreter/Execution Environment",
+        thought="To execute the generated Python code and obtain the result, I will run it in a safe environment."
+    )
+
     env = {"pd": pd, "df": df}
     if should_plot:
         plt.rcParams["figure.dpi"] = 100  # Set default DPI for all figures
@@ -123,32 +139,34 @@ def FraudReasoningCurator(query: str, result: Any) -> Tuple[str, bool, bool]:
         desc = str(result)[:300]
 
     if is_plot:
-        prompt = f'''
-        The user asked: "{query}".
-        Below is a description of the plot result:
-        {desc}
-        Explain in 2–3 concise sentences what the chart shows. More importantly, based on this, identify any potential fraud patterns. Structure your pattern identification as "Pattern Detected: [Description of pattern]".'''
+        prompt = MESSAGES['fraud_reasoning_curator']['plot_description'].format(query=query, desc=desc)
     else:
-        prompt = f'''
-        The user asked: "{query}".
-        The result value is: {desc}
-        Explain in 2–3 concise sentences what this tells about the data. More importantly, based on this, identify any potential fraud patterns. Structure your pattern identification as "Pattern Detected: [Description of pattern]".'''
+        prompt = MESSAGES['fraud_reasoning_curator']['data_description'].format(query=query, desc=desc)
     return prompt, is_error, is_plot
 
 # === FraudReasoningAgent (streaming) =========================================
 def FraudReasoningAgent(query: str, result: Any):
     """Streams the LLM's reasoning about the result (plot or value) and extracts model 'thinking' and final explanation."""
+    # Log the action of the FraudReasoningAgent
+    log_agent_action(
+        agent_name="Fraud Reasoning Agent", 
+        tool_used="Fraud Reasoning Curator",
+        thought="To interpret the results and identify potential fraud patterns."
+    )    
+    
     prompt_content, is_error, is_plot = FraudReasoningCurator(query, result)
     
     messages = [
-        SystemMessage(content="detailed thinking on. You are an insightful data analyst. When identifying patterns, prefix them with 'Pattern Detected:'. "),
+        SystemMessage(content=MESSAGES['fraud_reasoning_agent']['system_message']),
         HumanMessage(content=prompt_content)
     ]
 
     # Streaming LLM call using LangChain
+    # Assuming llm_model and st (streamlit) are defined elsewhere
     response_generator = llm_model.stream(messages, config={"max_tokens": 1024, "temperature": 0.2})
 
     # Stream and display thinking
+    # Assuming st.empty() and st.markdown are from Streamlit
     thinking_placeholder = st.empty()
     full_response = ""
     thinking_content = ""
@@ -183,26 +201,26 @@ def FraudReasoningAgent(query: str, result: Any):
     return thinking_content, reasoning_without_pattern, pattern_description
 
 
+
 # === FraudRuleGenerationAgent =========================================
 def FraudRuleGenerationAgent(pattern_description: str) -> str:
     """
     Uses the LLM to generate a simple 'IF [condition] THEN [action]' rule
     based on the identified fraud pattern.
     """
+
+    # Log the action of the FraudRuleGenerationAgent
+    log_agent_action(
+        agent_name="Fraud Rule Generation Agent", 
+        tool_used="Fraud Rule Generation Tool",
+        thought="To generate a concise fraud detection rule based on the identified pattern."
+    )
     if not pattern_description:
-        return "No clear pattern identified to generate a rule."
+        return MESSAGES['fraud_rule_generation_agent']['no_pattern_message']
 
-    prompt_content = f"""
-    Based on the following identified fraud pattern:
-    "{pattern_description}"
-
-    Suggest a simple, concise rule in the format 'IF [condition] THEN [action]'.
-    The action should be either 'decline_transaction' or 'challenge_identity'.
-    Ensure the condition is specific and directly relates to the pattern.
-    Your response should ONLY contain the rule, e.g., 'IF transaction_amount < 100 AND user_age < 7 days THEN challenge_identity'.
-    """
+    prompt_content = MESSAGES['fraud_rule_generation_agent']['prompt'].format(pattern_description=pattern_description)
     messages = [
-        SystemMessage(content="detailed thinking off. You are an expert at creating concise, actionable fraud detection rules. Respond ONLY with the rule in 'IF [condition] THEN [action]' format."),
+        SystemMessage(content=MESSAGES['fraud_rule_generation_agent']['system_message']),
         HumanMessage(content=prompt_content)
     ]
 
@@ -210,40 +228,40 @@ def FraudRuleGenerationAgent(pattern_description: str) -> str:
         response = llm_model.invoke(messages, config={"max_tokens": 100, "temperature": 0.1})
         return response.content.strip()
     except Exception as exc:
-        return f"Error generating rule: {exc}"
+        return MESSAGES['fraud_rule_generation_agent']['error_message'].format(exc=exc)
+
 
 # === FraudDataFrameSummary TOOL (pandas only) =========================================
 def FraudDataFrameSummaryTool(df: pd.DataFrame) -> str:
     """Generate a summary prompt string for the LLM based on the DataFrame."""
-    prompt = f"""
-    You are a fraud detection expert.
-
-    Given this dataset:
-    - Rows: {len(df)}, Columns: {len(df.columns)}
-    - Data types: {df.dtypes.to_dict()}
-    - Sample data:
-    {df.head(10).to_csv(index=False)}
-
-    Identify 2-3 patterns in the data that may indicate fraudulent behavior.
-
-    Then, suggest 2–3 follow-up questions a fraud analyst should ask to investigate these patterns further.
-"""
+    prompt = MESSAGES['fraud_dataframe_summary_tool']['prompt'].format(
+        num_rows=len(df),
+        num_cols=len(df.columns),
+        data_types=df.dtypes.to_dict(),
+        sample_data=df.head(10).to_csv(index=False)
+    )
     return prompt
 
 # === FraudDataInsightAgent (upload-time only) ===============================
-
 def FraudDataInsightAgent(df: pd.DataFrame) -> str:
     """Uses the LLM to generate a brief summary and possible questions for the uploaded dataset."""
+     # Log the action of the FraudDataInsightAgent
+    log_agent_action(
+        agent_name="Fraud Data Insight Agent", 
+        tool_used="Fraud Data Frame Summary Tool",
+        thought="To provide an initial summary of the dataset and suggest potential fraud patterns and follow-up questions."
+    )
+
     prompt_content = FraudDataFrameSummaryTool(df)
     messages = [
-        SystemMessage(content="detailed thinking off. You are a data analyst providing brief, focused insights."),
+        SystemMessage(content=MESSAGES['fraud_data_insight_agent']['system_message']),
         HumanMessage(content=prompt_content)
     ]
     try:
         response = llm_model.invoke(messages, config={"max_tokens": 512, "temperature": 0.2})
         return response.content
     except Exception as exc:
-        return f"Error generating dataset insights: {exc}"
+        return MESSAGES['fraud_data_insight_agent']['error_message'].format(exc=exc)
 
 # === Helpers ===========================================================
 
@@ -258,6 +276,87 @@ def extract_first_code_block(text: str) -> str:
         return ""
     return text[start:end].strip()
 
+
+def load_and_process_file(uploaded_file):
+    """
+    Reads the uploaded file (CSV or XLSX), processes it, and returns a single primary DataFrame.
+
+    Args:
+        uploaded_file: The file object uploaded via st.file_uploader.
+
+    Returns:
+        tuple: (primary_df, status_message, is_success)
+               primary_df: The main DataFrame to be used for display/analysis.
+               status_message: A string indicating the status (success, warning, error).
+               is_success: Boolean indicating if the operation was successful.
+    """
+    primary_df = None
+    status_message = ""
+    is_success = False
+
+    if uploaded_file.name.endswith('.csv'):
+        try:
+            primary_df = pd.read_csv(uploaded_file)
+            status_message = "CSV file loaded successfully."
+            is_success = True
+        except Exception as e:
+            status_message = f"Error loading CSV file: {e}"
+            st.error(status_message)
+
+    elif uploaded_file.name.endswith('.xlsx'):
+        try:
+            # Read all sheets from the XLSX file into a dictionary of DataFrames
+            all_sheets_df = pd.read_excel(uploaded_file, sheet_name=None)
+            status_message = f"XLSX file loaded with sheets: {', '.join(all_sheets_df.keys())}"
+
+            # Extract individual DataFrames for merging
+            df_customers = all_sheets_df.get('Customers')
+            df_accounts = all_sheets_df.get('Accounts')
+            df_events = all_sheets_df.get('Events')
+            df_transactions = all_sheets_df.get('Transactions')
+
+            # Check if all expected sheets are present before attempting to merge
+            if all(df is not None for df in [df_customers, df_accounts, df_events, df_transactions]):
+                # --- Merging Logic ---
+                df_merged_customer_accounts = pd.merge(
+                    df_customers,
+                    df_accounts,
+                    on='customer_id',
+                    how='inner'
+                )
+
+                df_merged_customer_accounts_events = pd.merge(
+                    df_merged_customer_accounts,
+                    df_events,
+                    on='customer_id',
+                    how='inner'
+                )
+
+                final_df = pd.merge(
+                    df_merged_customer_accounts_events,
+                    df_transactions,
+                    on='customer_id',
+                    how='inner'
+                )               
+
+                primary_df = final_df # This is the single DataFrame to be returned
+                status_message = "Successfully created a single combined DataFrame from XLSX sheets."
+                is_success = True
+
+            else:
+                status_message = "One or more expected sheets (Customers, Accounts, Events, Transactions) were not found in the uploaded XLSX file. Please ensure all necessary sheets are present."
+                st.error(status_message)
+
+        except Exception as e:
+            status_message = f"An error occurred during XLSX file processing or merging: {e}"
+            st.error(status_message)
+
+    else:
+        status_message = "Unsupported file type. Please upload a CSV or XLSX file."
+        st.error(status_message)
+
+    return primary_df, status_message, is_success
+
 # === Main Streamlit App ===============================================
 
 def main():
@@ -271,52 +370,26 @@ def main():
 
     with left:
         st.header("Fraud Data Analysis Agent")
-        st.markdown("<medium>Powered by <a href='[https://build.nvidia.com/nvidia/llama-3_1-nemotron-ultra-253b-v1](https://build.nvidia.com/nvidia/llama-3_1-nemotron-ultra-253b-v1)'>NVIDIA Llama-3.1-Nemotron-Ultra-253b-v1</a></medium>", unsafe_allow_html=True)
-        file = st.file_uploader("Choose CSV", type=["csv"])
-        # Modified section in your main() function where the file is read
+        #st.markdown("<medium>Powered by <a href='[https://build.nvidia.com/nvidia/llama-3_1-nemotron-ultra-253b-v1](https://build.nvidia.com/nvidia/llama-3_1-nemotron-ultra-253b-v1)'>NVIDIA Llama-3.1-Nemotron-Ultra-253b-v1</a></medium>", unsafe_allow_html=True)
+        file = st.file_uploader("Choose CSV/XLSX", type=["csv","xlsx"])
         if file:
-            if ("df_collection" not in st.session_state) or (st.session_state.get("current_file") != file.name):
+            if ("df" not in st.session_state) or (st.session_state.get("current_file") != file.name):
+                primary_df, status_msg, success_flag = load_and_process_file(file)
+                primary_df.to_csv("output.csv", index=False)
+                st.session_state.df = primary_df # Store the single DataFrame
                 st.session_state.current_file = file.name
-
-                if file.name.endswith('.csv'):
-                    st.session_state.df = pd.read_csv(file) # Still handles single CSV
-                    st.session_state.df_collection = {"main_sheet": st.session_state.df} # Wrap in a dict for consistency
-                elif file.name.endswith('.xlsx'):
-                    # Read all sheets into a dictionary of DataFrames
-                    st.session_state.df_collection = pd.read_excel(file, sheet_name=None)
-                    # You might want to set a "default" df for initial display/operations
-                    # For simplicity, let's assume the first sheet is the primary one
-                    st.session_state.df = list(st.session_state.df_collection.values())[0]
-                else:
-                    st.error("Unsupported file type. Please upload a CSV or XLSX file.")
-                    if "df" in st.session_state: del st.session_state.df
-                    if "df_collection" in st.session_state: del st.session_state.df_collection
-                    if "current_file" in st.session_state: del st.session_state.current_file
-
                 st.session_state.messages = []
                 st.session_state.feedback_log = [] # Reset feedback for new file
                 with st.spinner("Generating dataset insights …"):
-                    # Now, how to generate insights for multiple sheets?
-                    # Option A: Summarize each sheet individually
-                    all_insights = {}
-                    for sheet_name, sheet_df in st.session_state.df_collection.items():
-                        all_insights[sheet_name] = FraudDataInsightAgent(sheet_df)
-                    st.session_state.insights = all_insights # Store as a dictionary
-
-            # Display initial insights for all sheets
-            st.dataframe(st.session_state.df.head()) # Still showing just the first sheet's head
+                    st.session_state.insights = FraudDataInsightAgent(st.session_state.df)
+            st.dataframe(st.session_state.df.head())
             st.markdown("### Dataset Insights")
-            if isinstance(st.session_state.insights, dict):
-                for sheet_name, insight_text in st.session_state.insights.items():
-                    st.markdown(f"#### Insights for Sheet: `{sheet_name}`")
-                    st.markdown(insight_text)
-            else:
-                st.markdown(st.session_state.insights) # Fallback for single CSV
+            st.markdown(st.session_state.insights)
         else:
-            st.info("Upload a CSV to begin chatting with your data.")
+            st.info("Upload a CSV to begin analyzing data for fraud pattern.")
 
     with right:
-        st.header("Chat with your data")
+        st.header("Chat with your data for fraud insights.")
         if "messages" not in st.session_state:
             st.session_state.messages = []
 
@@ -354,7 +427,7 @@ def main():
 
 
         if file:  # only allow chat after upload
-            user_q = st.chat_input("Ask about your data…")
+            user_q = st.chat_input("Query about fraud patterns…")
             if user_q:
                 st.session_state.messages.append({"role": "user", "content": user_q})
                 with st.spinner("Working …"):

@@ -1,0 +1,75 @@
+fraud_plot_code_generator:
+  prompt: |
+    Given DataFrame `df` with columns: {cols}
+    Write Python code using pandas **and matplotlib** (as plt) to answer:
+    "{query}"
+
+    Rules
+    -----
+    1. Use pandas for data manipulation and matplotlib.pyplot (as plt) for plotting.
+    2. Assign the final result (DataFrame, Series, scalar *or* matplotlib Figure) to a variable named `result`.
+    3. Create only ONE relevant plot. Set `figsize=(6,4)`, add title/labels.
+    4. Return your answer inside a single markdown fence that starts with ```python and ends with ```.
+
+fraud_code_writing:
+  prompt: |
+    Given DataFrame `df` with columns: {cols}
+    Write Python code (pandas **only**, no plotting) to answer:
+    "{query}"
+
+    Rules
+    -----
+    1. Use pandas operations on `df` only.
+    2. Assign the final result to `result`.
+    3. Wrap the snippet in a single ```python code fence (no extra prose).
+
+fraud_code_generation_agent:
+  system_message: "detailed thinking off. You are a Python data-analysis expert who writes clean, efficient code. Solve the given problem with optimal pandas operations. Be concise and focused. Your response must contain ONLY a properly-closed ```python code block with no explanations before or after. Ensure your solution is correct, handles edge cases, and follows best practices for data analysis."
+
+fraud_reasoning_curator:
+  plot_description: |
+    The user asked: "{query}".
+    Below is a description of the plot result:
+    {desc}
+    Explain in 2–3 concise sentences what the chart shows. More importantly, based on this, identify any potential fraud patterns. Structure your pattern identification as "Pattern Detected: [Description of pattern]".
+  data_description: |
+    The user asked: "{query}".
+    The result value is: {desc}
+    Explain in 2–3 concise sentences what this tells about the data. More importantly, based on this, identify any potential fraud patterns. Structure your pattern identification as "Pattern Detected: [Description of pattern]".
+
+fraud_reasoning_agent:
+  system_message: "detailed thinking on. You are an insightful data analyst. When identifying patterns, prefix them with 'Pattern Detected:'."
+
+fraud_rule_generation_agent:
+  no_pattern_message: "No clear pattern identified to generate a rule."
+  prompt: |
+    Based on the following identified fraud pattern:
+    "{pattern_description}"
+
+    Suggest a simple, concise rule in the format 'IF [condition] THEN [action]'.
+    The action should be either 'decline_transaction' or 'challenge_identity'.
+    Ensure the condition is specific and directly relates to the pattern.
+    Your response should ONLY contain the rule, e.g., 'IF transaction_amount < 100 AND user_age < 7 days THEN challenge_identity'.
+  system_message: "detailed thinking off. You are an expert at creating concise, actionable fraud detection rules. Respond ONLY with the rule in 'IF [condition] THEN [action]' format."
+  error_message: "Error generating rule: {exc}"
+
+fraud_dataframe_summary_tool:
+  prompt: |
+    You are a fraud detection expert.
+
+    Given this dataset:
+    - Rows: {num_rows}, Columns: {num_cols}
+    - Data types: {data_types}
+    - Sample data:
+    {sample_data}
+
+    There might be multiple types of fradulent transaction in the data. Identify top 3 patterns in the data that may indicate fraudulent behavior. 
+
+    Then, suggest 2–3 follow-up questions a fraud analyst should ask to investigate these patterns further.
+
+fraud_data_insight_agent:
+  system_message: "detailed thinking off. You are a data analyst providing brief, focused insights."
+  error_message: "Error generating dataset insights: {exc}"
+
+fraud_query_understanding_tool:
+  system_message: "detailed thinking off. You are an assistant that determines if a query is requesting a data visualization. Respond with only 'true' if the query is asking for a plot, chart, graph, or any visual representation of data. Otherwise, respond with 'false'."
